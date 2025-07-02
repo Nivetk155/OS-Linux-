@@ -1,8 +1,10 @@
 # OS-Linux
 #Operating System-Linux-Kernel:
 
-File management
+File Management
 
 Message Queue(POSIX)
 
 PIPE
+
+Process Management
