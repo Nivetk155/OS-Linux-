@@ -3,10 +3,10 @@
 #include<string.h>
 int main(){
 int fd[2];
+ //pipe(fd)-create the pipe
 if(pipe(fd)==-1){
-perror("It is not working");
-//exit (1);
-return 7;
+perror("Pipe is not created");
+return 0;
 }
 pid_t pid;
 pid= fork();
@@ -21,12 +21,13 @@ pid= fork();
  write(fd[1],str,strlen(str)+1);
  close(fd[1]);
  }
+  //child process
  else{
- char str2[200];
+ char str1[20];
  close(fd[1]);
- read(fd[0],str2,sizeof(str2));
+ read(fd[0],str2,sizeof(str1));
  printf("%s\n",str2);
  close(fd[0]);
  }
- return 8;
+ return 0;
  }
