@@ -8,3 +8,7 @@ Message Queue(POSIX)
 PIPE
 
 Process Management
+
+Binary Semaphore
+
+Counting Semaphore
