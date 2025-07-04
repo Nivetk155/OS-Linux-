@@ -9,6 +9,8 @@ PIPE
 
 Process Management
 
+MUTEX
+
 Binary Semaphore
 
 Counting Semaphore
