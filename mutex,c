@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include<pthread.h>
+#include<string.h>
+pthread_mutex_t lock;//Initializing the mutex
+void* write_thread(void *arg){
+    FILE *f1;
+    pthread_mutex_lock(&lock);//aquiring the memory
+    f1=fopen("a.txt","w");//opening the file for writing
+  
+  //To check the file whether it is opened or not..
+    if(f1==NULL){
+        perror("File is opened..");
+        pthread_mutex_unlock(&lock);
+        return NULL;
+    }
+    
+    //writing the content to the the file
+    fprintf(f1,"Hii Linux!");
+ 
+    fclose(f1);//closing the file
+    pthread_mutex_unlock(&lock);//releasing the memory
+    return NULL;
+}
+void* read_thread(void *arg){
+    FILE *f1;
+    pthread_mutex_lock(&lock);
+    f1=fopen("a.txt","r");
+     if(f1==NULL){
+        perror("File is opened..");
+        pthread_mutex_unlock(&lock);
+        return NULL;
+    }
+    //To store the read content in a buffer and displaying it..
+    char ch;
+    while((ch=fgetc(f1))!=EOF){
+        printf("%c",ch);
+    }
+    fclose(f1);
+    pthread_mutex_unlock(&lock);
+    return NULL;
+}
+
+int main()
+{
+    pthread_mutex_init(&lock,NULL);//Initial function for mutex
+    
+    pthread_t t1,t2;//Initializing the pthread
+    
+    pthread_create(&t1,NULL,write_thread,NULL);//create THREAD1
+    pthread_join(t1,NULL);//To wait for thread1 is to be finished
+    
+    pthread_create(&t2,NULL,read_thread,NULL);//create THREAD2
+    pthread_join(t2,NULL);//To wait for thread2 is to be finished
+    
+    pthread_mutex_destroy(&lock);//Exit function for mutex
+
+    return 0;
+}
+
+/* OUTPUT:
+Hii Linux! */
